@@ -1,0 +1,228 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 27 22:53:21 2021
+
+@author: tales
+"""
+import math 
+import face_recognition
+
+
+def dist(x0, y0, x1, y1):
+    a = (x1-x0)**2 + (y1-y0)**2
+    b = math.sqrt(a)
+    return b
+
+def add(a, lista):
+    lista.append(a)
+    return print("Sucesso")
+
+    
+def calculoAU (frameNeutro, frameApice):
+    #guarda os landmarks em um dicionário
+    face_landmarks_list_neutro = face_recognition.face_landmarks(frameNeutro)
+    
+    face_landmarks_list_apice = face_recognition.face_landmarks(frameApice)
+    
+    #Inner Brow Raiser
+    AU1Variation = dist(face_landmarks_list_apice[0]['left_eyebrow'][4][0], face_landmarks_list_apice[0]['left_eyebrow'][4][1],
+                        face_landmarks_list_apice[0]['left_eye'][3][0], face_landmarks_list_apice[0]['left_eye'][3][1]) - dist(face_landmarks_list_neutro[0]['left_eyebrow'][4][0], face_landmarks_list_neutro[0]['left_eyebrow'][4][1],
+                        face_landmarks_list_neutro[0]['left_eye'][3][0], face_landmarks_list_neutro[0]['left_eye'][3][1]) 
+    #Inner Brow Raiser
+    AU11Variation = dist(face_landmarks_list_apice[0]['right_eyebrow'][0][0], face_landmarks_list_apice[0]['right_eyebrow'][0][1],
+                         face_landmarks_list_apice[0]['right_eye'][0][0], face_landmarks_list_apice[0]['right_eye'][0][1]) - dist(face_landmarks_list_neutro[0]['right_eyebrow'][0][0], face_landmarks_list_neutro[0]['right_eyebrow'][0][1],
+                         face_landmarks_list_neutro[0]['right_eye'][0][0], face_landmarks_list_neutro[0]['right_eye'][0][1])
+    #Outer Brow Raiser
+    AU21Variation = dist(face_landmarks_list_apice[0]['left_eyebrow'][1][0], face_landmarks_list_apice[0]['left_eyebrow'][1][1],
+                         face_landmarks_list_apice[0]['left_eye'][3][0], face_landmarks_list_apice[0]['left_eye'][3][1]) - dist(face_landmarks_list_neutro[0]['left_eyebrow'][1][0], face_landmarks_list_neutro[0]['left_eyebrow'][1][1],
+                         face_landmarks_list_neutro[0]['left_eye'][3][0], face_landmarks_list_neutro[0]['left_eye'][3][1])
+    
+    #Outer Brow Raiser
+    AU22Variation = dist(face_landmarks_list_apice[0]['right_eyebrow'][3][0], face_landmarks_list_apice[0]['right_eyebrow'][3][1],
+                         face_landmarks_list_apice[0]['right_eye'][0][0], face_landmarks_list_apice[0]['right_eye'][0][1]) - dist(face_landmarks_list_neutro[0]['right_eyebrow'][3][0], face_landmarks_list_neutro[0]['right_eyebrow'][3][1],
+                         face_landmarks_list_neutro[0]['right_eye'][0][0], face_landmarks_list_neutro[0]['right_eye'][0][1])
+    
+    #Brow Lowerer
+    AU4Variation = dist(face_landmarks_list_apice[0]['left_eyebrow'][4][0], face_landmarks_list_apice[0]['left_eyebrow'][4][1],
+                        face_landmarks_list_apice[0]['right_eyebrow'][0][0], face_landmarks_list_apice[0]['right_eyebrow'][0][1]) - dist(face_landmarks_list_neutro[0]['left_eyebrow'][4][0], face_landmarks_list_neutro[0]['left_eyebrow'][4][1],
+                        face_landmarks_list_neutro[0]['right_eyebrow'][0][0], face_landmarks_list_neutro[0]['right_eyebrow'][0][1])
+    
+    #Upper Lid Raiser
+    AU51Variation = dist(face_landmarks_list_apice[0]['left_eye'][2][0], face_landmarks_list_apice[0]['left_eye'][2][1],
+                         face_landmarks_list_apice[0]['left_eye'][4][0], face_landmarks_list_apice[0]['left_eye'][4][1]) - dist(face_landmarks_list_neutro[0]['left_eye'][2][0], face_landmarks_list_neutro[0]['left_eye'][2][1],
+                         face_landmarks_list_neutro[0]['left_eye'][4][0], face_landmarks_list_neutro[0]['left_eye'][4][1])
+    
+    #Upper Lid Raiser
+    AU52Variation = dist(face_landmarks_list_apice[0]['right_eye'][1][0], face_landmarks_list_apice[0]['right_eye'][1][1],
+                         face_landmarks_list_apice[0]['right_eye'][5][0], face_landmarks_list_apice[0]['left_eye'][5][1]) - dist(face_landmarks_list_neutro[0]['right_eye'][1][0], face_landmarks_list_neutro[0]['right_eye'][1][1],
+                         face_landmarks_list_neutro[0]['right_eye'][5][0], face_landmarks_list_neutro[0]['left_eye'][5][1])
+    
+    #Cheek Raiser
+    AU61Variation = AU51Variation
+    
+    #Cheek Raiser
+    AU62Variation = AU52Variation
+    
+    #Nose Wrinkler
+    AU91Variation = dist(face_landmarks_list_apice[0]['left_eyebrow'][4][0], face_landmarks_list_apice[0]['left_eyebrow'][4][1],
+                         face_landmarks_list_apice[0]['nose_tip'][0][0], face_landmarks_list_apice[0]['nose_tip'][0][1]) - dist(face_landmarks_list_neutro[0]['left_eyebrow'][4][0], face_landmarks_list_neutro[0]['left_eyebrow'][4][1],
+                         face_landmarks_list_neutro[0]['nose_tip'][0][0], face_landmarks_list_neutro[0]['nose_tip'][0][1])
+    
+    #Nose Wrinkler
+    AU92Variation = dist(face_landmarks_list_apice[0]['right_eyebrow'][0][0], face_landmarks_list_apice[0]['right_eyebrow'][0][1],
+                         face_landmarks_list_apice[0]['nose_tip'][4][0], face_landmarks_list_apice[0]['nose_tip'][4][1]) - dist(face_landmarks_list_neutro[0]['right_eyebrow'][0][0], face_landmarks_list_neutro[0]['right_eyebrow'][0][1],
+                         face_landmarks_list_neutro[0]['nose_tip'][4][0], face_landmarks_list_neutro[0]['nose_tip'][4][1])
+    
+    
+    #Upper Lip Raiser
+    AU10Variation = dist(face_landmarks_list_apice[0]['top_lip'][3][0], face_landmarks_list_apice[0]['top_lip'][3][1],
+                         face_landmarks_list_apice[0]['nose_tip'][2][0], face_landmarks_list_apice[0]['nose_tip'][2][1]) - dist(face_landmarks_list_neutro[0]['top_lip'][3][0], face_landmarks_list_neutro[0]['top_lip'][3][1],
+                         face_landmarks_list_neutro[0]['nose_tip'][2][0], face_landmarks_list_neutro[0]['nose_tip'][2][1])
+    
+    #Lip Corner Puller
+    AU12Variation = dist(face_landmarks_list_apice[0]['top_lip'][0][0], face_landmarks_list_apice[0]['top_lip'][0][1],
+                         face_landmarks_list_apice[0]['top_lip'][6][0], face_landmarks_list_apice[0]['top_lip'][6][1]) - dist(face_landmarks_list_neutro[0]['top_lip'][0][0], face_landmarks_list_neutro[0]['top_lip'][0][1],
+                         face_landmarks_list_neutro[0]['top_lip'][6][0], face_landmarks_list_neutro[0]['top_lip'][6][1])
+    
+    #Lip Corner Depressor
+    AU151Variation = dist(face_landmarks_list_apice[0]['nose_tip'][0][0], face_landmarks_list_apice[0]['nose_tip'][0][1],
+                          face_landmarks_list_apice[0]['top_lip'][0][0], face_landmarks_list_apice[0]['top_lip'][0][1]) - dist(face_landmarks_list_neutro[0]['nose_tip'][0][0], face_landmarks_list_neutro[0]['nose_tip'][0][1],
+                          face_landmarks_list_neutro[0]['top_lip'][0][0], face_landmarks_list_neutro[0]['top_lip'][0][1])
+    
+    #Lip Corner Depressor
+    AU152Variation = dist(face_landmarks_list_apice[0]['nose_tip'][4][0], face_landmarks_list_apice[0]['nose_tip'][4][1],
+                          face_landmarks_list_apice[0]['top_lip'][6][0], face_landmarks_list_apice[0]['top_lip'][6][1]) - dist(face_landmarks_list_neutro[0]['nose_tip'][4][0], face_landmarks_list_neutro[0]['nose_tip'][4][1],
+                          face_landmarks_list_neutro[0]['top_lip'][6][0], face_landmarks_list_neutro[0]['top_lip'][6][1])
+    
+    #Chin Raiser
+    AU17Variation = dist(face_landmarks_list_apice[0]['bottom_lip'][3][0], face_landmarks_list_apice[0]['bottom_lip'][3][1],
+                         face_landmarks_list_apice[0]['nose_tip'][2][0], face_landmarks_list_apice[0]['nose_tip'][2][1]) - dist(face_landmarks_list_neutro[0]['bottom_lip'][3][0], face_landmarks_list_neutro[0]['bottom_lip'][3][1],
+                         face_landmarks_list_neutro[0]['nose_tip'][2][0], face_landmarks_list_neutro[0]['nose_tip'][2][1])
+    
+    #Lip stretcher
+    AU20Variation = dist(face_landmarks_list_apice[0]['bottom_lip'][3][0], face_landmarks_list_apice[0]['bottom_lip'][3][1],
+                         face_landmarks_list_apice[0]['chin'][8][0], face_landmarks_list_apice[0]['chin'][8][1]) - dist(face_landmarks_list_neutro[0]['bottom_lip'][3][0], face_landmarks_list_neutro[0]['bottom_lip'][3][1],
+                         face_landmarks_list_neutro[0]['chin'][8][0], face_landmarks_list_neutro[0]['chin'][8][1])
+    
+    #Lip Tightener
+    AU23Variation = dist(face_landmarks_list_apice[0]['top_lip'][0][0], face_landmarks_list_apice[0]['top_lip'][0][1],
+                         face_landmarks_list_apice[0]['top_lip'][6][0], face_landmarks_list_apice[0]['top_lip'][6][1]) - dist(face_landmarks_list_neutro[0]['top_lip'][0][0], face_landmarks_list_neutro[0]['top_lip'][0][1],
+                         face_landmarks_list_neutro[0]['top_lip'][6][0], face_landmarks_list_neutro[0]['top_lip'][6][1])
+    
+    #Lip Pressor
+    AU24Variation = dist(face_landmarks_list_apice[0]['top_lip'][3][0], face_landmarks_list_apice[0]['top_lip'][3][1],
+                         face_landmarks_list_apice[0]['bottom_lip'][3][0], face_landmarks_list_apice[0]['bottom_lip'][3][1]) - dist(face_landmarks_list_neutro[0]['top_lip'][3][0], face_landmarks_list_neutro[0]['top_lip'][3][1],
+                         face_landmarks_list_neutro[0]['bottom_lip'][3][0], face_landmarks_list_neutro[0]['bottom_lip'][3][1])
+    
+    #Lips Part
+    AU25Variation = dist(face_landmarks_list_apice[0]['top_lip'][9][0], face_landmarks_list_apice[0]['top_lip'][9][1],
+                         face_landmarks_list_apice[0]['bottom_lip'][9][0], face_landmarks_list_apice[0]['bottom_lip'][9][1]) - dist(face_landmarks_list_neutro[0]['top_lip'][9][0], face_landmarks_list_neutro[0]['top_lip'][9][1],
+                         face_landmarks_list_neutro[0]['bottom_lip'][9][0], face_landmarks_list_neutro[0]['bottom_lip'][9][1])
+    
+    #Jaw Drop
+    AU26Variation = dist(face_landmarks_list_apice[0]['chin'][8][0], face_landmarks_list_apice[0]['chin'][8][1],
+                         face_landmarks_list_apice[0]['nose_tip'][2][0], face_landmarks_list_apice[0]['nose_tip'][2][1]) - dist(face_landmarks_list_neutro[0]['chin'][8][0], face_landmarks_list_neutro[0]['chin'][8][1],
+                         face_landmarks_list_neutro[0]['nose_tip'][2][0], face_landmarks_list_neutro[0]['nose_tip'][2][1])
+    
+    #Mouth Stretch
+    AU27Variation = AU26Variation 
+    
+    
+    return AU1Variation, AU11Variation, AU21Variation, AU22Variation, AU4Variation, AU51Variation, AU52Variation, AU61Variation, AU62Variation, AU91Variation, AU92Variation, AU10Variation, AU12Variation, AU151Variation, AU152Variation, AU17Variation, AU20Variation, AU23Variation, AU24Variation, AU25Variation, AU26Variation, AU27Variation                                 
+
+
+def EmotionMasculino(lista):
+    
+    if (lista[0] >= 4.50 and lista[0] <= 8.06) and (lista[1] >= 3.94 and lista[1] <= 7.16) and (lista[13] >= 1.46 and lista[13] <= 23.24) and (lista[14] >= 0.37 and lista[14] <= 29.99) and (lista[15] >= -10 and lista[15] <= 8.97):
+        #print("sadness")
+        #A1, A15, A17
+        return  6
+    
+    if (lista[4] > -8 and lista[4] <= -3.97) and (lista[18] >= -18 and lista[18] < -1.90) and (lista[20] >= -5.03 and lista[20] <= -0.94):
+        #print("raiva")
+        #AU4, A24, AU26
+        return  1
+    
+    if (lista[9] >= -20.42 and lista[9] <= -7.82) and (lista[10] >= -19.3 and lista[10] <= -9.10) and (lista[11] >= -13.64 and lista[11] <= -0.05) and (lista[19] >= 0 and lista[19] <= 14.03):
+        #print("nojo")
+        #AU10, AU25, AU9
+        return  3
+    
+    if (lista[0] >= 5.32 and lista[0] <= 7.22) and (lista[1] >= 4.80 and lista[1] <= 8.81) and (lista[20] >= 1.88 and lista[20] <= 6.02):
+        #print("fear")
+        #AU1, AU26
+        return  4
+    
+    if (lista[8] >= -7.03 and lista[8] < -1.13) and (lista[12] >= 12.86 and lista[12] < 36):
+        #print("Alegria")
+        #AU6, AU12
+        return  5
+
+    if (lista[20] >= 21.89 and lista[20] <= 28.79) and (lista[5] >= 0.09 and lista[5] <= 9.02) and (lista[6] >= 0. and lista[6] <= 8.99):
+        #print("surpresa")
+        #AU26, AU5
+        return  7
+
+def EmotionFeminino(lista):
+    
+    if (lista[0] >= 0.35 and lista[0] <= 10.6) and (lista[1] >= 0.22 and lista[1] <= 11.14) and (lista[13] >= 0 and lista[13] <= 3.9) and (lista[14] >= 0.1 and lista[14] <= 7.78) and (lista[15] >= -6.98 and lista[15] <= -0.08):
+        #print("sadness")
+        #A1, A15, A17
+        return  6
+    
+    if (lista[4] > -16.26 and lista[4] <= -1.11) and (lista[18] >= -14.07 and lista[18] <= 0) and (lista[20] >= -10.06 and lista[20] <= 5.92):
+        #print("raiva")
+        #AU4, A24, AU26
+        return  1
+    
+    if (lista[9] >= -21.18 and lista[9] <= -5.89) and (lista[10] >= -22.83 and lista[10] <= -5.16) and (lista[11] >= -8.97 and lista[11] <= -0.97) and (lista[19] >= 0 and lista[19] <= 11):
+        #print("nojo")
+        #AU10, AU25, AU9
+        return  3
+    
+    if (lista[0] >= 1.76 and lista[0] <= 12.59) and (lista[1] >= 0 and lista[1] <= 15.74) and (lista[20] >= 0 and lista[20] <= 5.02):
+        #print("fear")
+        #AU1, AU26
+        return  4
+    
+    if (lista[8] >= -10.10 and lista[8] < 0) and (lista[12] >= 11.09 and lista[12] < 44.97):
+        #print("Alegria")
+        #AU6, AU12
+        return  5
+
+    if (lista[20] >= 19 and lista[20] <= 61.99) and (lista[5] >= 0 and lista[5] <= 9.20) and (lista[6] >= 0.96 and lista[6] <= 8.05):
+        #print("surpresa")
+        #AU26, AU5
+        return  7
+
+
+
+def Anger(lista):
+    if (lista[4] > -16.9 and lista[4] <= 0) and (lista[17] >= -3.99 and lista[17] < -0.23):
+        print("raiva")
+        return "raiva"
+
+def Hapiness(lista):
+    if (lista[7] >= -7.03 and lista[7] < -1.13) and (lista[12] >= 24 and lista[12] < 36):
+        print("Alegria")
+        return "Alegria"
+
+def Surprise(lista):
+    if (lista[20] >= 19 and lista[20] <= 56.94) and (lista[5] >= 0.09 and lista[5] <= 9.02) and (lista[6] >= 0. and lista[6] <= 8.99):
+        print("surpresa")
+        return "surpresa"
+    
+def Sadness(lista):
+    if (lista[13] >= 7.75 and lista[13] <= 23.24) and (lista[15] >= -10 and lista[15] <= 8.97):
+        print("sadness")
+        return "sadness"
+
+def Fear(lista):
+    if (lista[0] >= 4.39 and lista[0] <= 13.73) and (lista[1] >= 3.56 and lista[1] <= 15.77) and (lista[5] >= 3.56 and lista[5] <= 15.77) and (lista[20] >= 0.94 and lista[20] <= 11.99):
+        print("fear")
+        return "fear"
+
+def Disgust(lista):
+    if (lista[11] >= -4.21 and lista[11] <= -0.05) and (lista[15] >= -10.88 and lista[15] <= -0.9):
+        print("nojo")
+        return "nojo"
